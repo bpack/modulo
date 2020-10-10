@@ -1,0 +1,48 @@
+plugins {
+    id "org.springframework.boot" version "2.3.1.RELEASE"
+}
+
+dependencies {
+
+    implementation project(':modulo-core')
+    implementation project(':modulo-downstream')
+    implementation project(':modulo-persistence')
+    implementation project(':modulo-rest')
+    implementation project(':modulo-security')
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+jar {
+    enabled = true
+    manifest {
+        attributes 'Main-Class': 'com.ioglyph.modulo.application.ModuloApplication'
+    }
+}
+
+bootJar {
+    enabled = false
+    layered()
+}
+
+springBoot {
+    buildInfo()
+}
+
+task modules(type: Copy){
+    into "$buildDir/modules/lib"
+    from configurations.runtimeClasspath {
+        exclude group: "jakarta.activation"
+    }
+}

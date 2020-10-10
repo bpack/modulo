@@ -1,0 +1,12 @@
+FROM adoptopenjdk/openjdk11:jre-11.0.7_10-alpine
+
+ARG BUILD_DIR=application/build
+
+WORKDIR /opt/modulo/
+COPY ${BUILD_DIR}/modules/lib/* ./modules/
+COPY ${BUILD_DIR}/libs/*.jar ./application.jar
+
+CMD ["java", "-p", "/opt/modulo/:/opt/modulo/modules/", \
+    "-m", "com.ioglyph.modulo.application/com.ioglyph.modulo.application.ModuloApplication"]
+
+

@@ -1,0 +1,9 @@
+FROM adoptopenjdk/openjdk11:jre-11.0.3_7-alpine
+
+WORKDIR /opt/modulo
+
+COPY application/target/modules/lib/* ./modules/
+COPY application/target/modules/application/* ./modules/
+COPY application/target/*.jar ./application.jar
+
+ENTRYPOINT java -p /opt/modulo/:/opt/modulo/modules/ -m com.ioglyph.modulo.application/com.ioglyph.modulo.application.ModuloApplication

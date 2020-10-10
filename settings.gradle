@@ -1,0 +1,15 @@
+rootProject.name = 'modulo'
+
+include 'modulo-application'
+include 'modulo-core'
+include 'modulo-downstream'
+include 'modulo-persistence'
+include 'modulo-rest'
+include 'modulo-security'
+
+project(":modulo-application").projectDir= file("application")
+project(":modulo-core").projectDir= file("core")
+project(":modulo-downstream").projectDir= file("downstream")
+project(":modulo-persistence").projectDir = file("persistence")
+project(":modulo-rest").projectDir = file("rest")
+project(":modulo-security").projectDir = file("security")

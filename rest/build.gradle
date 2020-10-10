@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':modulo-core')
+    implementation project(':modulo-persistence')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}

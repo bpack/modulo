@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  modulo:
+    image: "bpack/modulo-gradle:latest"
+    environment:
+      - DB_HOST=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  modulo_maven:
+    image: "bpack/modulo-maven:latest"
+    environment:
+      - SPRING_PROFILES_ACTIVE=secondary
+      - DB_HOST=postgres
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+      - modulo
+
+  postgres:
+    image: "postgres:11"
+    environment:
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+
+volumes:
+  postgresdata:
+
