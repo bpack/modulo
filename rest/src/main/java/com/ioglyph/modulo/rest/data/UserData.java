@@ -9,6 +9,7 @@ public class UserData {
     public UUID id;
     public String username;
     public String email;
+    public String ip;
     public OffsetDateTime created;
     public OffsetDateTime updated;
 
@@ -20,5 +21,6 @@ public class UserData {
         this.email = user.email();
         this.created = user.created();
         this.updated = user.created();
+        this.ip = user.lastIp();
     }
 }

@@ -7,6 +7,7 @@ public class User {
     private UUID id;
     private Username username;
     private String email;
+    private String ip = "216.115.122.132";
     private OffsetDateTime created;
     private OffsetDateTime updated;
 
@@ -43,6 +44,8 @@ public class User {
     public String email(){
         return this.email;
     }
+
+    public String lastIp() { return this.ip; }
 
     public OffsetDateTime created(){
         return this.created;

@@ -1,9 +1,7 @@
 package com.ioglyph.modulo.rest;
 
-import com.ioglyph.modulo.core.user.CreateUserCommand;
-import com.ioglyph.modulo.core.user.User;
-import com.ioglyph.modulo.core.user.UserRepository;
-import com.ioglyph.modulo.core.user.UserService;
+import com.ioglyph.modulo.core.user.*;
+import com.ioglyph.modulo.rest.data.LocationData;
 import com.ioglyph.modulo.rest.data.UserData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +29,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class ModuloRestApi {
     private static final Logger logger = LoggerFactory.getLogger(ModuloRestApi.class);
+
     private final UserRepository repository;
     private final UserService service;
+    private final UserLocationService locator;
 
-    public ModuloRestApi(UserService service, UserRepository repository){
+    public ModuloRestApi(UserService service, UserLocationService locator, UserRepository repository){
         this.service = service;
+        this.locator = locator;
         this.repository = repository;
     }
 
@@ -65,6 +66,14 @@ public class ModuloRestApi {
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
+    @GetMapping("/{id}/location")
+    public ResponseEntity<?> getUserLocation(@PathVariable UUID id){
+        return locator
+                .getLocationData(id)
+                .map(location -> ResponseEntity.ok(locationResponse(location)))
+                .orElseThrow(ResourceNotFoundException::new);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable UUID id){
@@ -75,6 +84,12 @@ public class ModuloRestApi {
     private Map<String, Object> userResponse(User user) {
         return new HashMap<String, Object>() {{
             put("user", new UserData(user));
+        }};
+    }
+
+    private Map<String, Object> locationResponse(UserLocation location){
+        return new HashMap<String, Object>() {{
+            put("location", new LocationData(location));
         }};
     }
 

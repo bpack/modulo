@@ -17,6 +17,7 @@ port 8080 and the maven version uses 8081.
 - `GET modulo/api/users` - returns all users.
 - `POST modulo/api/users` - creates a user from a JSON payload.
 - `GET modulo/api/users/<id>` - returns a single user.
+- `GET modulo/api/users/<id>/location` - returns location data on the given user.
 - `DELETE modulo/api/users/<id>` - deletes a user (sets visibility to false).
 
 JSON (for POST)
@@ -32,6 +33,7 @@ and `password`.
 ### Structure
 - `application` - aggregates and configures the modules into a deployable structure. Depends on all other modules.
 - `core` - domain logic.
+- `downstream` - client API access to downstream services. Depends on `core`.
 - `persistence` - data access implementation. Depends on `core`.
 - `rest` - exposes the Rest API. Depends on `core` and `persistence`.
 - `security` - simple and insecure security configuration.

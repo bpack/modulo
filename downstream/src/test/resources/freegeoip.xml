@@ -1,0 +1,13 @@
+<Response>
+	<IP>216.115.122.132</IP>
+	<CountryCode>US</CountryCode>
+	<CountryName>United States</CountryName>
+	<RegionCode>AK</RegionCode>
+	<RegionName>Alaska</RegionName>
+	<City>Fairbanks</City>
+	<ZipCode>99701</ZipCode>
+	<TimeZone>America/Anchorage</TimeZone>
+	<Latitude>64.8401</Latitude>
+	<Longitude>-147.7202</Longitude>
+	<MetroCode>745</MetroCode>
+</Response>
