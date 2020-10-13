@@ -15,6 +15,12 @@ public class UserService {
         return user;
     }
 
+    public User update(UpdateUserCommand command){
+        User user = command.execute();
+        repository.persist(user);
+        return user;
+    }
+
     public void delete(UUID id){
         User user = repository.load(id).orElseThrow(() -> new RuntimeException("No user with ID " + id));
         user.delete();

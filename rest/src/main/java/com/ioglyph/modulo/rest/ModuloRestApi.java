@@ -7,14 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -51,7 +44,7 @@ public class ModuloRestApi {
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserData data, UriComponentsBuilder builder){
         validate(data);
-        CreateUserCommand command = new CreateUserCommand(data.username, data.email);
+        CreateUserCommand command = new CreateUserCommand(data.username, data.email, data.ip);
         User user = service.create(command);
 
         URI uri = builder.path("/api/users/{id}").buildAndExpand(user.id()).toUri();
@@ -64,6 +57,15 @@ public class ModuloRestApi {
         return repository.load(id)
                 .map(user -> ResponseEntity.ok(userResponse(user)))
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody UserData data){
+        validate(data);
+        User user = repository.load(id).orElseThrow(ResourceNotFoundException::new);
+        UpdateUserCommand command = new UpdateUserCommand(user, data.email, data.ip);
+        User updated = service.update(command);
+        return ResponseEntity.ok(userResponse(updated));
     }
 
     @GetMapping("/{id}/location")

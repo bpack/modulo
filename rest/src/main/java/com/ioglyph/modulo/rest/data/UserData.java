@@ -20,7 +20,7 @@ public class UserData {
         this.username = user.username().value();
         this.email = user.email();
         this.created = user.created();
-        this.updated = user.created();
+        this.updated = user.updated();
         this.ip = user.lastIp();
     }
 }

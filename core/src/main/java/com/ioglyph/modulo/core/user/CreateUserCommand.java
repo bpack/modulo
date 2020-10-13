@@ -6,15 +6,16 @@ import java.util.UUID;
 public class CreateUserCommand {
     private String username;
     private String email;
+    private String ip;
 
-    public CreateUserCommand(String username, String email){
+    public CreateUserCommand(String username, String email, String ip){
         this.username = username;
         this.email = email;
+        this.ip = ip;
     }
 
     public User execute(){
         OffsetDateTime now = OffsetDateTime.now();
-        User user = new User(UUID.randomUUID(), username, email, now, now, true, null);
-        return user;
+        return new User(UUID.randomUUID(), username, email, ip, now, now, true, null);
     }
 }

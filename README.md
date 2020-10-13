@@ -24,7 +24,8 @@ JSON (for POST)
 ```
 {
     "username": "username",
-    "email": "email@example.com"
+    "email": "email@example.com",
+    "ip": "216.115.122.132"
 }
 ```
 The username and password is currently hardcoded in the security module as `user`

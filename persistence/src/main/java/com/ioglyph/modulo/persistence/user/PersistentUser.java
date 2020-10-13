@@ -22,6 +22,8 @@ public class PersistentUser {
 
     private String email;
 
+    private String ip;
+
     @Column(name = "created", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime created;
 
@@ -36,11 +38,12 @@ public class PersistentUser {
     public PersistentUser() {}
 
     public PersistentUser(final UUID id, final String username, final String email,
-            final OffsetDateTime created, final OffsetDateTime updated,
+            final String ip, final OffsetDateTime created, final OffsetDateTime updated,
             final boolean visible, final OffsetDateTime deleted) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.ip = ip;
         this.created = created;
         this.updated = updated;
         this.visible = visible;
@@ -52,6 +55,7 @@ public class PersistentUser {
                 this.id,
                 this.username,
                 this.email,
+                this.ip,
                 this.created,
                 this.updated,
                 this.visible,
@@ -64,6 +68,7 @@ public class PersistentUser {
                 user.id(),
                 user.username().value(),
                 user.email(),
+                user.lastIp(),
                 user.created(),
                 user.updated(),
                 user.visible(),
