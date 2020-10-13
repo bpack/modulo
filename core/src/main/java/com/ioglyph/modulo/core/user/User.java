@@ -16,10 +16,6 @@ public class User {
     private boolean visible = false;
     private OffsetDateTime deleted;
 
-    public User(UUID id, String name, String email){
-        this(id, name, email, null, null, null, true, null);
-    }
-
     public User(UUID id, String name, String email, String ip, OffsetDateTime created, OffsetDateTime updated, boolean visible, OffsetDateTime deleted){
         this.id = id;
         this.username = new Username(validate(Validation.USERNAME, name));

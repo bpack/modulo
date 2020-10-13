@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class ModuloRestApi {
     private static final Logger logger = LoggerFactory.getLogger(ModuloRestApi.class);
 
@@ -47,7 +47,7 @@ public class ModuloRestApi {
         CreateUserCommand command = new CreateUserCommand(data.username, data.email, data.ip);
         User user = service.create(command);
 
-        URI uri = builder.path("/api/users/{id}").buildAndExpand(user.id()).toUri();
+        URI uri = builder.path("/api/user/{id}").buildAndExpand(user.id()).toUri();
         return ResponseEntity.created(uri).body(userResponse(user));
     }
 
@@ -61,7 +61,6 @@ public class ModuloRestApi {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody UserData data){
-        validate(data);
         User user = repository.load(id).orElseThrow(ResourceNotFoundException::new);
         UpdateUserCommand command = new UpdateUserCommand(user, data.email, data.ip);
         User updated = service.update(command);

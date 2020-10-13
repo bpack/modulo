@@ -14,11 +14,13 @@ Postgres database and both versions of the application. The gradle version uses
 port 8080 and the maven version uses 8081.
 
 ### API
-- `GET modulo/api/users` - returns all users.
-- `POST modulo/api/users` - creates a user from a JSON payload.
-- `GET modulo/api/users/<id>` - returns a single user.
-- `GET modulo/api/users/<id>/location` - returns location data on the given user.
-- `DELETE modulo/api/users/<id>` - deletes a user (sets visibility to false).
+- `GET modulo/api/user` - returns all users.
+- `POST modulo/api/user` - creates a user from a JSON payload.
+- `GET modulo/api/user/<id>` - returns a single user.
+- `PUT modulo/api/user/<id>` - update the email and/or ip address for a user.
+- `GET modulo/api/user/<id>/location` - returns location data on the given user
+(based on ip address).
+- `DELETE modulo/api/user/<id>` - deletes a user (sets visibility to false).
 
 JSON (for POST)
 ```

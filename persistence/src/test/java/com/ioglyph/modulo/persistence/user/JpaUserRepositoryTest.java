@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.UUID;
 
 @EnableAutoConfiguration
@@ -31,6 +32,8 @@ public class JpaUserRepositoryTest {
     @Autowired
     EntityManager em;
 
+    int counter = 0;
+
     @Test
     public void testContext(){
         Assertions.assertNotNull(em);
@@ -40,12 +43,33 @@ public class JpaUserRepositoryTest {
     @Test
     public void testSimplePersistLoad(){
         UUID id = insertUser();
-        Assertions.assertNotNull(repository.load(id));
+        Assertions.assertNotNull(repository.load(id).get());
+    }
+
+    @Test
+    public void testUpdate(){
+        UUID id = insertUser();
+
+        User u = repository.load(id).get();
+
+        User user = new User(id, u.username().value(), "updated@example.com", "1.1.1.1", u.created(), u.updated(), true, null);
+        repository.persist(user);
+    }
+
+    @Test
+    public void testAll(){
+        UUID first = insertUser();
+        UUID second = insertUser();
+
+        List<User> users = repository.all();
+
+        Assertions.assertEquals(2, users.size());
     }
 
     private UUID insertUser(){
         UUID id = UUID.randomUUID();
-        repository.persist(new User(id, "username1", "username1@example.com", "50.155.140.127", null, null, true, null));
+        String username = "username" + Integer.toString(counter++);
+        repository.persist(new User(id, username, username + "@example.com", "50.155.140.127", null, null, true, null));
         return id;
     }
 }
