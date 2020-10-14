@@ -14,15 +14,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation 'com.intuit.karate:karate-junit5:0.9.6'
+    testImplementation 'com.intuit.karate:karate-apache:0.9.6'
 }
-
-test {
-    useJUnitPlatform()
-}
-
 
 jar {
     enabled = true
@@ -31,14 +25,9 @@ jar {
     }
 }
 
-bootJar {
-    enabled = false
-    layered()
-}
+bootJar { enabled = false }
 
-springBoot {
-    buildInfo()
-}
+springBoot { buildInfo() }
 
 task modules(type: Copy){
     into "$buildDir/modules/lib"
@@ -46,3 +35,30 @@ task modules(type: Copy){
         exclude group: "jakarta.activation"
     }
 }
+
+sourceSets {
+    functionalTest {
+        java.srcDir file('src/functional-test/java')
+        resources {
+            srcDir file('src/functional-test/java')
+            exclude '**/*.java'
+        }
+        compileClasspath = sourceSets.main.output + configurations.testCompileClasspath + sourceSets.test.output
+        runtimeClasspath = output + compileClasspath + configurations.testRuntimeClasspath
+    }
+}
+
+task functionaltest(type: Test) {
+    description = 'Runs Karate functional tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+    reports.junitXml.destination = file("${reports.junitXml.destination}/functional")
+
+    useJUnitPlatform()
+    systemProperty "karate.options", System.properties.getProperty("karate.options")
+    systemProperty "karate.env", System.properties.getProperty("karate.env")
+    outputs.upToDateWhen { false }
+}
+
