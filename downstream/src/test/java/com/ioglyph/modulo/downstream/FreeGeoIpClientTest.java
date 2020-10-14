@@ -4,10 +4,10 @@ import com.ioglyph.modulo.downstream.api.GeolocationResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class FreeGeoIpClientTest {
+class FreeGeoIpClientTest {
 
     @Test
-    public void testGetLocationForIp(){
+    void testGetLocationForIp(){
         FreeGeoIpClient client = new FreeGeoIpClient("https://freegeoip.app/xml/");
         GeolocationResponse response = client.getLocationForIp("216.115.122.131");
         Assertions.assertNotNull(response);

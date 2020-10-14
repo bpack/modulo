@@ -13,6 +13,7 @@ and Gradle built versions of the application.
 Postgres database and both versions of the application. The gradle version uses
 port 8080 and the maven version uses 8081.
 
+
 ### API
 - `GET modulo/api/user` - returns all users.
 - `POST modulo/api/user` - creates a user from a JSON payload.
@@ -40,3 +41,9 @@ and `password`.
 - `persistence` - data access implementation. Depends on `core`.
 - `rest` - exposes the Rest API. Depends on `core` and `persistence`.
 - `security` - simple and insecure security configuration.
+
+### Code Analysis
+```
+docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+./gradlew test sonarqube
+```

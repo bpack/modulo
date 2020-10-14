@@ -10,10 +10,10 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class UserTest {
+class UserTest {
 
     @Test
-    public void testDelete(){
+    void testDelete(){
         User user = new User(UUID.randomUUID(), "username", "username@example.com",
             "10.10.10.10", OffsetDateTime.now(), OffsetDateTime.now(), true, null);
 
@@ -24,7 +24,7 @@ public class UserTest {
     }
 
     @Test
-    public void testValidUsernames(){
+    void testValidUsernames(){
         UUID id = UUID.randomUUID();
         String email = "test@example.com";
         String ip = "127.0.255.012";
@@ -38,7 +38,7 @@ public class UserTest {
 
     @ParameterizedTest
     @ValueSource(strings ={ "sample!", "sample's", "$sample", "sample()", "sam ple" } )
-    public void testInvalidUsernameThrowsException(String user){
+    void testInvalidUsernameThrowsException(String user){
         String ip = "10.10.10.10";
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new User(UUID.randomUUID(), user, "test@example.com", ip, null, null, true, null);
@@ -46,7 +46,7 @@ public class UserTest {
     }
 
     @Test
-    public void testValidEmails(){
+    void testValidEmails(){
         UUID id = UUID.randomUUID();
         String username = "sample";
         String ip = "10.10.10.10";
@@ -60,7 +60,7 @@ public class UserTest {
 
     @ParameterizedTest
     @ValueSource(strings ={ "sample!", "sam ple@example.com", "$sample@example.com", "sample()@example.com"} )
-    public void testInvalidEmailThrowsException(String email){
+    void testInvalidEmailThrowsException(String email){
         String ip = "10.10.10.10";
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             new User(UUID.randomUUID(), "user", email, ip, null, null, true, null);
@@ -69,7 +69,7 @@ public class UserTest {
 
     @ParameterizedTest
     @ValueSource(strings ={ "....", "256.10.10.10", "123.456.789.012", "125..122.1"} )
-    public void testInvalidIpThrowsException(String ip){
+    void testInvalidIpThrowsException(String ip){
         String email = "test@test.com";
         String username = "user";
         Assertions.assertThrows(IllegalArgumentException.class, () -> {

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class UserServiceTest {
+class UserServiceTest {
 
     @Test
-    public void testCreate(){
+    void testCreate(){
         UserService service = new UserService(new RepositoryFake());
         CreateUserCommand command = new CreateUserCommand("username", "user@example.com", "1.1.1.1");
         User user = service.create(command);
@@ -19,7 +19,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testUpdate(){
+    void testUpdate(){
         User user = new User(UUID.randomUUID(), "user", "user@example.com", "1.1.1.1", null, null, true, null);
         UserService service = new UserService(new RepositoryFake());
         UpdateUserCommand command = new UpdateUserCommand(user, "new_email@email.com", "2.2.2.2");
@@ -36,6 +36,11 @@ public class UserServiceTest {
 
         @Override
         public Optional<User> load(UUID id) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<User> queryByUsername(String username) {
             return Optional.empty();
         }
 

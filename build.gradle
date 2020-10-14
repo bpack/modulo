@@ -1,5 +1,6 @@
 plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.sonarqube' version '3.0'
 }
 
 allprojects {
@@ -17,8 +18,18 @@ allprojects {
     }
 }
 
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://localhost:9000'
+        property "sonar.sourceEncoding", "UTF-8"
+    }
+}
+
 configure(subprojects.findAll()) {
     apply plugin: 'java'
+    apply plugin: 'org.sonarqube'
+    apply plugin: 'jacoco'
+
     apply plugin: 'io.spring.dependency-management'
 
     sourceCompatibility = 11
@@ -35,12 +46,23 @@ configure(subprojects.findAll()) {
         imports { mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE") }
     }
 
-    test { useJUnitPlatform() }
+    test {
+        useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport { reports { xml.enabled true } }
+
     jar { archiveVersion = project.version }
 
     plugins.withType(JavaPlugin).configureEach {
         java {
             modularity.inferModulePath = true
+        }
+    }
+
+    sonarqube {
+        properties {
         }
     }
 }

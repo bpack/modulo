@@ -6,10 +6,8 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 
 import com.ioglyph.modulo.core.user.User;
-import com.ioglyph.modulo.core.user.Username;
 
 @Entity(name = "app_user")
 public class PersistentUser {
@@ -73,5 +71,13 @@ public class PersistentUser {
                 user.updated(),
                 user.visible(),
                 user.deleted());
+    }
+
+    public String getUsername(){
+        return this.username;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
     }
 }

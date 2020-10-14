@@ -32,9 +32,7 @@ public class FreeGeoIpClient {
         String uri = url + ip;
         HttpRequest request = createRequest(uri);
         String content = sendRequest(request);
-        GeolocationResponse geo = unmarshall(content);
-
-        return geo;
+        return unmarshall(content);
     }
 
     private HttpRequest createRequest(String uri){
@@ -65,10 +63,7 @@ public class FreeGeoIpClient {
         try {
             StringReader reader = new StringReader(xml);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            GeolocationResponse response = (GeolocationResponse) unmarshaller
-                    .unmarshal(reader);
-
-            return response;
+            return (GeolocationResponse) unmarshaller.unmarshal(reader);
         }
         catch(JAXBException e){
             throw new IllegalStateException(e.getMessage());

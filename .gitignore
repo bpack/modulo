@@ -2,4 +2,5 @@
 .gradle
 .mvn
 build
+out
 target

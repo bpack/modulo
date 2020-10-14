@@ -5,10 +5,10 @@ import com.ioglyph.modulo.core.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CreateUserCommandTest {
+class CreateUserCommandTest {
 
     @Test
-    public void testCreate(){
+    void testCreate(){
         String username = "user";
         String email = "email@example.com";
         String ip = "32.64.128.0";

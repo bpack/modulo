@@ -7,14 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -42,7 +48,7 @@ public class ModuloRestApi {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserData data, UriComponentsBuilder builder){
+    public ResponseEntity<UserData> createUser(@RequestBody UserData data, UriComponentsBuilder builder){
         validate(data);
         CreateUserCommand command = new CreateUserCommand(data.username, data.email, data.ip);
         User user = service.create(command);
@@ -52,7 +58,7 @@ public class ModuloRestApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable UUID id){
+    public ResponseEntity<UserData> getUser(@PathVariable UUID id){
         logger.info("User ID {} requested.", id);
         return repository.load(id)
                 .map(user -> ResponseEntity.ok(userResponse(user)))
@@ -60,7 +66,7 @@ public class ModuloRestApi {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody UserData data){
+    public ResponseEntity<UserData> updateUser(@PathVariable UUID id, @RequestBody UserData data){
         User user = repository.load(id).orElseThrow(ResourceNotFoundException::new);
         UpdateUserCommand command = new UpdateUserCommand(user, data.email, data.ip);
         User updated = service.update(command);
@@ -68,7 +74,7 @@ public class ModuloRestApi {
     }
 
     @GetMapping("/{id}/location")
-    public ResponseEntity<?> getUserLocation(@PathVariable UUID id){
+    public ResponseEntity<LocationData> getUserLocation(@PathVariable UUID id){
         return locator
                 .getLocationData(id)
                 .map(location -> ResponseEntity.ok(locationResponse(location)))
@@ -82,16 +88,12 @@ public class ModuloRestApi {
         service.delete(id);
     }
 
-    private Map<String, Object> userResponse(User user) {
-        return new HashMap<String, Object>() {{
-            put("user", new UserData(user));
-        }};
+    private UserData userResponse(User user) {
+        return new UserData(user);
     }
 
-    private Map<String, Object> locationResponse(UserLocation location){
-        return new HashMap<String, Object>() {{
-            put("location", new LocationData(location));
-        }};
+    private LocationData locationResponse(UserLocation location){
+        return new LocationData(location);
     }
 
     private void validate(UserData data){

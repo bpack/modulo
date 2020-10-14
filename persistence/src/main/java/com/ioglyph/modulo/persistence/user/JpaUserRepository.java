@@ -31,6 +31,19 @@ public class JpaUserRepository extends SimpleJpaRepository<PersistentUser, UUID>
     }
 
     @Override
+    public Optional<User> queryByUsername(String username){
+        // TODO: The following doesn't work but findAll + stream does
+//        PersistentUser u = new PersistentUser();
+//        u.setUsername(username);
+//        return this.findOne(Example.of(u)).map(PersistentUser::toUser);
+        return this.findAll()
+                .stream()
+                .filter(u -> u.getUsername().equals(username))
+                .map(PersistentUser::toUser)
+                .findFirst();
+    }
+
+    @Override
     public List<User> all() {
         return this.findAll().stream()
                 .filter(u -> u.visible)

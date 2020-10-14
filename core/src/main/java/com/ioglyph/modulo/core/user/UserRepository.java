@@ -9,5 +9,7 @@ public interface UserRepository {
 
     Optional<User> load(UUID id);
 
+    Optional<User> queryByUsername(String username);
+
     List<User> all();
 }

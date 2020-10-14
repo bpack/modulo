@@ -6,14 +6,14 @@ import com.ioglyph.modulo.core.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class UpdateUserCommandTest {
+class UpdateUserCommandTest {
 
     private final String username = "test_user";
     private final String email = "test_user@example.com";
     private final String ip = "171.22.33.44";
 
     @Test
-    public void testUpdateWithEmailChange(){
+    void testUpdateWithEmailChange(){
         User orig = createTestUser();
         UpdateUserCommand command = new UpdateUserCommand(orig, "new_email@example.com", null);
 
@@ -24,7 +24,7 @@ public class UpdateUserCommandTest {
     }
 
     @Test
-    public void testUpdateWithIpChange(){
+    void testUpdateWithIpChange(){
         User orig = createTestUser();
         UpdateUserCommand command = new UpdateUserCommand(orig, null, "1.1.1.1");
 
@@ -35,7 +35,7 @@ public class UpdateUserCommandTest {
     }
 
     @Test
-    public void testUpdateWithIpAndEmailChange(){
+    void testUpdateWithIpAndEmailChange(){
         User orig = createTestUser();
         String newEmail = "another@newemail.com";
         String newIp = "255.255.255.255";

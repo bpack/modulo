@@ -10,16 +10,16 @@ Scenario: Test create and retrieve user and location
   And request { username: '#(rand)', email: 'email@example.com', ip: '216.115.122.132' }
   When method POST
   Then status 201
-  And match response.user.id == '#notnull'
+  And match response.id == '#notnull'
 
-  Given path response.user.id
+  Given path response.id
   When method GET
   Then status 200
 
-  Given path response.user.id + '/location'
+  Given path response.id + '/location'
   When method GET
   Then status 200
-  And match response.location.country == 'United States'
+  And match response.country == 'United States'
 
 
 Scenario: Test create and update user
@@ -29,14 +29,14 @@ Scenario: Test create and update user
   And request { username: '#(rand)', email: 'user@example.com', ip: '216.115.122.132' }
   When method POST
   Then status 201
-  And match response.user.id == '#notnull'
+  And match response.id == '#notnull'
 
-  Given path response.user.id
+  Given path response.id
   And header Authorization = call read('auth.js')
   And request { email: 'user_updated@example.com', ip: '125.125.125.125' }
   When method PUT
   Then status 200
-  And match response.user.email == 'user_updated@example.com'
+  And match response.email == 'user_updated@example.com'
 
 
 Scenario: Test get user list

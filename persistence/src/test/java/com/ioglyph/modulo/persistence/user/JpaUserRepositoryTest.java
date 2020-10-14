@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @EnableAutoConfiguration
 @DataJpaTest
-public class JpaUserRepositoryTest {
+class JpaUserRepositoryTest {
 
     @Configuration
     static class TestConfig {
@@ -35,35 +35,47 @@ public class JpaUserRepositoryTest {
     int counter = 0;
 
     @Test
-    public void testContext(){
+    void testContext(){
         Assertions.assertNotNull(em);
         Assertions.assertNotNull(repository);
     }
 
     @Test
-    public void testSimplePersistLoad(){
+    void testSimplePersistLoad(){
         UUID id = insertUser();
         Assertions.assertNotNull(repository.load(id).get());
     }
 
     @Test
-    public void testUpdate(){
+    void testUpdate(){
         UUID id = insertUser();
 
         User u = repository.load(id).get();
 
         User user = new User(id, u.username().value(), "updated@example.com", "1.1.1.1", u.created(), u.updated(), true, null);
         repository.persist(user);
+
+        Assertions.assertEquals("updated@example.com", user.email());
     }
 
     @Test
-    public void testAll(){
+    void testAll(){
         UUID first = insertUser();
         UUID second = insertUser();
 
         List<User> users = repository.all();
 
         Assertions.assertEquals(2, users.size());
+    }
+
+    @Test
+    void testFindByUsername(){
+        UUID id = insertUser();
+
+        User created = repository.load(id).get();
+        User found = repository.queryByUsername(created.username().value()).get();
+
+        Assertions.assertNotNull(found);
     }
 
     private UUID insertUser(){

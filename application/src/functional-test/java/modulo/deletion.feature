@@ -10,14 +10,14 @@ Scenario: Test create and delete of a user
   And request { username: '#(user)', email: 'email@example.com', ip: '216.115.122.132' }
   When method POST
   Then status 201
-  And match response.user.id == '#notnull'
+  And match response.id == '#notnull'
 
-  Given path response.user.id
-  And def user_id = response.user.id
+  Given path response.id
+  And def user_id = response.id
   When method GET
   Then status 200
 
-  Given path response.user.id
+  Given path response.id
   When method DELETE
   Then status 204
 

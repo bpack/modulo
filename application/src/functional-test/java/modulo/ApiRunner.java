@@ -2,7 +2,7 @@ package modulo;
 
 import com.intuit.karate.junit5.Karate;
 
-public class ApiRunner {
+class ApiRunner {
 
     @Karate.Test
     Karate testUserEndpoint() {
