@@ -1,12 +1,12 @@
 Feature: Testing the Modulo user deletion workflow
 
 Background:
+  * url base_url + base_path
   * def rand_user = function(){ return 'user-' + java.util.UUID.randomUUID().toString().substring(0, 8)}
   * def user = callonce rand_user
 
 Scenario: Test create and delete of a user
-  Given url 'http://localhost:8080/modulo/api/user/'
-  And header Authorization = call read('auth.js')
+  Given header Authorization = call read('auth.js')
   And request { username: '#(user)', email: 'email@example.com', ip: '216.115.122.132' }
   When method POST
   Then status 201
@@ -21,13 +21,12 @@ Scenario: Test create and delete of a user
   When method DELETE
   Then status 204
 
-  Given url 'http://localhost:8080/modulo/api/user/' + user_id
+  Given path user_id
   When method GET
   Then status 404
 
 Scenario: Test create with deleted username fails
-  Given url 'http://localhost:8080/modulo/api/user/'
-  And header Authorization = call read('auth.js')
+  Given header Authorization = call read('auth.js')
   And request { username: '#(user)', email: 'email@example.com', ip: '216.115.122.132' }
   When method POST
   Then status 400
