@@ -5,6 +5,9 @@ import com.ioglyph.modulo.core.user.User;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * Data class for JSON serialization to decouple the API and domain objects
+ */
 public class UserData {
     public UUID id;
     public String username;

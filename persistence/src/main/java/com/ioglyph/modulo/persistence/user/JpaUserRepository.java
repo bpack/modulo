@@ -13,6 +13,10 @@ import com.ioglyph.modulo.core.user.User;
 import com.ioglyph.modulo.core.user.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+
+/**
+ * Spring JPA implementation of the UserRepository domain interface.
+ */
 @Transactional
 public class JpaUserRepository extends SimpleJpaRepository<PersistentUser, UUID> implements UserRepository{
 
@@ -36,6 +40,7 @@ public class JpaUserRepository extends SimpleJpaRepository<PersistentUser, UUID>
 //        PersistentUser u = new PersistentUser();
 //        u.setUsername(username);
 //        return this.findOne(Example.of(u)).map(PersistentUser::toUser);
+
         return this.findAll()
                 .stream()
                 .filter(u -> u.getUsername().equals(username))

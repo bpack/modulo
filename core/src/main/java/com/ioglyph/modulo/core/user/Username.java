@@ -1,5 +1,8 @@
 package com.ioglyph.modulo.core.user;
 
+/**
+ * Domain primitive for a username.
+ */
 public class Username {
     private String value;
 

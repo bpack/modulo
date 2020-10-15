@@ -9,6 +9,10 @@ import javax.persistence.Id;
 
 import com.ioglyph.modulo.core.user.User;
 
+/**
+ * Data object containing persistence annotations for database interaction
+ * to decouple the User domain class from the underlying persistence mechanism.
+ */
 @Entity(name = "app_user")
 public class PersistentUser {
 

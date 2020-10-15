@@ -2,6 +2,9 @@ package com.ioglyph.modulo.rest.data;
 
 import com.ioglyph.modulo.core.user.UserLocation;
 
+/**
+ * Data class for JSON serialization.
+ */
 public class LocationData {
 
     public String country;

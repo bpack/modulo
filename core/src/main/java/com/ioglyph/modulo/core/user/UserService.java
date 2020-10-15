@@ -2,6 +2,9 @@ package com.ioglyph.modulo.core.user;
 
 import java.util.UUID;
 
+/**
+ * Service interactor that handles User domain logic.
+ */
 public class UserService {
     private final UserRepository repository;
 
@@ -9,6 +12,10 @@ public class UserService {
         this.repository = repository;
     }
 
+    /**
+     * Handles invocation of the CreateUserCommand. Throws an exception if the
+     * given username already exists.
+     */
     public User create(CreateUserCommand command){
         User user = command.execute();
         if(repository.queryByUsername(user.username().value()).isEmpty()) {
@@ -24,6 +31,10 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Handles deletion of the User with the given ID or throws an exception if
+     * no user exists with that ID.
+     */
     public void delete(UUID id){
         User user = repository.load(id).orElseThrow(() -> new RuntimeException("No user with ID " + id));
         user.delete();

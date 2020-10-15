@@ -13,6 +13,9 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 
+/**
+ * Handles the HTTP calls to and XML responses from the freegeoip.app service.
+ */
 public class FreeGeoIpClient {
     private final HttpClient client;
     private final JAXBContext context;
@@ -28,6 +31,10 @@ public class FreeGeoIpClient {
         url = baseurl.endsWith("/") ? baseurl : baseurl + "/";
     }
 
+    /**
+     * Returns the GeolocationResponse for a given IP address. Throws an
+     * IllegalStateException if anything goes wrong.
+     */
     public GeolocationResponse getLocationForIp(String ip){
         String uri = url + ip;
         HttpRequest request = createRequest(uri);

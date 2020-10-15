@@ -3,6 +3,9 @@ package com.ioglyph.modulo.downstream.api;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Data class for handling XML responses from the freegeoip API.
+ */
 @XmlRootElement(name="Response")
 public class GeolocationResponse {
 

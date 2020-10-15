@@ -1,0 +1,24 @@
+# vi: ft=dockerfile
+
+FROM adoptopenjdk/openjdk14:jdk-14.0.2_12-alpine AS builder
+
+ARG BUILD_DIR=application/build
+ARG OUTPUT_DIR=dist
+ARG LAUNCHER=modulo=com.ioglyph.modulo.application/com.ioglyph.modulo.application.ModuloApplication
+
+WORKDIR /build
+COPY ${BUILD_DIR}/modules/lib/* ./modules/
+COPY ${BUILD_DIR}/libs/*.jar modulo.jar
+
+RUN jlink --add-modules com.ioglyph.modulo.application \
+    --module-path ${JAVA_HOME}/jmods:/build/:/build/modules/ \
+    --launcher ${LAUNCHER} \
+    --output ${OUTPUT_DIR} \
+    --strip-debug --compress 2 --no-header-files --no-man-pages
+
+
+
+FROM alpine
+COPY --from=builder /build/dist /app
+
+ENTRYPOINT ["/app/bin/modulo"]

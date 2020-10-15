@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * REST API for interacting with the Modulo 'User' domain.
+ */
 @RestController
 @RequestMapping("/api/user")
 public class ModuloRestApi {

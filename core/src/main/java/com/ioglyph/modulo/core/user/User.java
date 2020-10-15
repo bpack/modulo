@@ -5,15 +5,22 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Domain class that encapsulates a simple definition of a User.
+ * Invariants:
+ *   - id, username, email and ip are non-null and valid
+ *   - when visible is set to false then the deleted timestamp is set
+ */
 public class User {
-    private UUID id;
-    private Username username;
-    private String email;
-    private String ip;
-    private OffsetDateTime created;
+    private final UUID id;
+    private final Username username;
+    private final String email;
+    private final String ip;
+    private final OffsetDateTime created;
+
     private OffsetDateTime updated;
 
-    private boolean visible = false;
+    private boolean visible = true;
     private OffsetDateTime deleted;
 
     public User(UUID id, String name, String email, String ip, OffsetDateTime created, OffsetDateTime updated, boolean visible, OffsetDateTime deleted){

@@ -21,8 +21,11 @@ run: build
 	./gradlew bootrun
 
 docker.build: build
-	docker build -t $(OWNER)/$(REPO)-gradle:$(VERSION) -f docker/dockerfile.gradle .
-	docker build -t $(OWNER)/$(REPO)-maven:$(VERSION) -f docker/dockerfile.maven .
+	docker build -t $(OWNER)/$(REPO)-gradle:$(VERSION) -f docker/dockerfile-gradle .
+	docker build -t $(OWNER)/$(REPO)-maven:$(VERSION) -f docker/dockerfile-maven .
+
+docker.jlink:
+	docker build -t $(OWNER)/$(REPO)-jlink:$(VERSION) -f docker/dockerfile-jlink .
 
 docker.run: docker.build
 	docker-compose -f docker/docker-compose.yml up

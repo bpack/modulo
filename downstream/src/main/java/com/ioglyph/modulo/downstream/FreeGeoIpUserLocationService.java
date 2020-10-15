@@ -8,6 +8,9 @@ import com.ioglyph.modulo.core.user.UserRepository;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Implementation of the UserLocationService domain interface.
+ */
 public class FreeGeoIpUserLocationService implements UserLocationService {
     final UserRepository repository;
     final FreeGeoIpClient client;

@@ -1,5 +1,8 @@
 package com.ioglyph.modulo.core.user;
 
+/**
+ * Domain primitive that encapsulates a User's location
+ */
 public class UserLocation {
     private final String country;
     private final String region;

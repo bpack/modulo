@@ -13,6 +13,10 @@ and Gradle built versions of the application.
 Postgres database and both versions of the application. The gradle version uses
 port 8080 and the maven version uses 8081.
 
+`make docker.jlink` - Depends on `build`. Attepts to create a docker image using
+a docker multi-stage build that leverages jlink. This doesn't currently work due to
+the presence of multiple automatic modules in the dependency graph.
+
 
 ### API
 - `GET modulo/api/user` - returns all users.
@@ -31,6 +35,7 @@ JSON (for POST)
     "ip": "216.115.122.132"
 }
 ```
+
 The username and password is currently hardcoded in the security module as `user`
 and `password`.
 
