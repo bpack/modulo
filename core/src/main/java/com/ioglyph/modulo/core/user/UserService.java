@@ -11,8 +11,11 @@ public class UserService {
 
     public User create(CreateUserCommand command){
         User user = command.execute();
-        repository.persist(user);
-        return user;
+        if(repository.queryByUsername(user.username().value()).isEmpty()) {
+            repository.persist(user);
+            return user;
+        }
+        throw new IllegalArgumentException("Username " + user.username().value() + " already exists.");
     }
 
     public User update(UpdateUserCommand command){

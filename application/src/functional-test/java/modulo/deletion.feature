@@ -30,7 +30,6 @@ Scenario: Test create with deleted username fails
   And header Authorization = call read('auth.js')
   And request { username: '#(user)', email: 'email@example.com', ip: '216.115.122.132' }
   When method POST
-  # TODO: This should be an invalid request, not a server error
-  Then status 500
+  Then status 400
 
 

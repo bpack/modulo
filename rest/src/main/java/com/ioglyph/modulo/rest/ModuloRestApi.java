@@ -100,5 +100,8 @@ public class ModuloRestApi {
         if(null != data.id){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID specification not allowed on user creation");
         }
+        if(repository.queryByUsername(data.username).isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username " + data.username + " already exists");
+        }
     }
 }
