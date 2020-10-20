@@ -23,6 +23,8 @@ public class ModuloSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers("/actuator/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

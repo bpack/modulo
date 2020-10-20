@@ -5,6 +5,11 @@ import com.intuit.karate.junit5.Karate;
 class ApiRunner {
 
     @Karate.Test
+    Karate testActuators() {
+        return Karate.run("actuator").relativeTo(getClass());
+    }
+
+    @Karate.Test
     Karate testUserEndpoint() {
         return Karate.run("user").relativeTo(getClass());
     }
