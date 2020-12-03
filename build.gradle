@@ -42,8 +42,7 @@ configure(subprojects.findAll()) {
     }
 
     dependencyManagement {
-        // Note: Compilation currently fails when not using 2.3.4
-        imports { mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE") }
+        imports { mavenBom("org.springframework.boot:spring-boot-dependencies:2.4.0") }
     }
 
     test {

@@ -1,6 +1,5 @@
 .idea
 .gradle
-.mvn
 build
 out
 target
